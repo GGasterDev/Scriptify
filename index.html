@@ -3,27 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scriptify - GasterDev</title>
+  <title>Scriptify - JxsueDev</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== Estilo general ===== */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #111111;
+      --card-bg: #fafafa;
+      --header-bg: #ffffff;
+      --footer-bg: #111111;
+      --footer-text: #cccccc;
+    }
+
+    body.dark {
+      --bg-color: #000000;
+      --text-color: #ffffff;
+      --card-bg: #111111;
+      --header-bg: #000000;
+      --footer-bg: #000000;
+      --footer-text: #aaaaaa;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #ffffff;
-      color: #111;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       margin: 0;
       padding: 0;
       text-align: center;
+      transition: background-color 0.4s, color 0.4s;
     }
 
-    /* ===== Header ===== */
     header {
-      background: #fff;
+      background: var(--header-bg);
       padding: 2rem 1rem;
-      border-bottom: 2px solid #f0f0f0;
+      border-bottom: 2px solid rgba(255,255,255,0.1);
     }
 
     h1 {
@@ -32,7 +49,6 @@
       font-weight: 700;
     }
 
-    /* ===== Planes ===== */
     .plans {
       display: flex;
       justify-content: center;
@@ -42,7 +58,7 @@
     }
 
     .plan {
-      background: #fafafa;
+      background: var(--card-bg);
       border-radius: 14px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
       padding: 1.5rem;
@@ -55,11 +71,11 @@
       box-shadow: 0 10px 18px rgba(0,0,0,0.15);
     }
 
-    /* ===== Footer ===== */
     footer {
-      background: #111;
-      color: #ccc;
+      background: var(--footer-bg);
+      color: var(--footer-text);
       padding: 1rem;
+      transition: background 0.4s;
     }
 
     footer a {
@@ -67,24 +83,39 @@
       text-decoration: none;
     }
 
-    /* ===== Colores personalizados ===== */
-    .color-rojo {
-      color: #e60000;
-    }
-
-    .color-azul {
-      color: #0066ff;
-    }
-
+    .color-rojo { color: #e60000; }
+    .color-azul { color: #0066ff; }
     .color-dorado {
       color: #bfa300;
       font-weight: 600;
-      text-shadow: 0 0 6px rgba(191,163,0,0.4); /* brillo dorado leve */
+      text-shadow: 0 0 6px rgba(191,163,0,0.4);
+    }
+
+    /* Botón de cambio */
+    #theme-btn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      padding: 10px 18px;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+      z-index: 999;
+    }
+
+    #theme-btn:hover {
+      background: #555;
     }
   </style>
 </head>
 
 <body>
+  <button id="theme-btn" onclick="toggleTheme()">🌙 Modo oscuro</button>
+
   <header>
     <h1 class="color-rojo">Scriptify</h1>
     <p>Contrata un plan y obtén desarrollo personalizado de aplicaciones, sitios web o programas.</p>
@@ -111,9 +142,34 @@
   </section>
 
   <footer>
-    <p>📩 Contáctame por correo: 
-      <a href="mailto:Jxsuedev@Gmail.com">JxsueDev@gmail.com</a>
+    <p>📩 Contáctame por correo:
+      <a href="mailto:Jxsuedev@gmail.com">JxsueDev@gmail.com</a>
     </p>
   </footer>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.getElementById('theme-btn');
+      body.classList.toggle('dark');
+
+      if (body.classList.contains('dark')) {
+        btn.textContent = '☀️ Modo claro';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        btn.textContent = '🌙 Modo oscuro';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    window.onload = function() {
+      const theme = localStorage.getItem('theme');
+      const btn = document.getElementById('theme-btn');
+      if (theme === 'dark') {
+        document.body.classList.add('dark');
+        btn.textContent = '☀️ Modo claro';
+      }
+    };
+  </script>
 </body>
 </html>
